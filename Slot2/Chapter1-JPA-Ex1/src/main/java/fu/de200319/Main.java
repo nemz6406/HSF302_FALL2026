@@ -13,7 +13,7 @@ public class Main {
 
         System.out.println("--- Đang tạo mới nhân viên ---");
         // Tạo 1 object Employee mới (Trạng thái: NEW/TRANSIENT)
-        Employee emp = new Employee("Nguyen Van A", "a3@fpt.edu.vn",
+        Employee emp = new Employee("Nguyen Van A", "a4@fpt.edu.vn",
                 new BigDecimal("15000000"), Gender.MALE, LocalDate.of(2022, 3, 1));
 
         // Gọi hàm save
@@ -45,5 +45,20 @@ public class Main {
         for (Employee e : dao.findBySalaryGreaterThanAndActive(new BigDecimal("10000000"))) {
             System.out.println(" -> " + e);
         }
+        System.out.println("\n--- Bắt đầu TODO 0.6 (UPDATE) ---");
+        // Giả sử sếp quyết định tăng lương cho nhân viên emp vừa tạo lúc đầu
+        // emp hiện tại đang ở trạng thái DETACHED
+        emp.setSalary(new BigDecimal("18500000"));
+
+        // Gọi hàm update để đồng bộ xuống DB
+        Employee updatedEmp = dao.update(emp);
+        System.out.println("6. Thông tin sau khi update (đối tượng trả về từ merge):");
+        System.out.println(" -> " + updatedEmp);
+
+        // Kiểm chứng lại bằng cách đọc hẳn lại từ DB lên xem đã lưu chưa
+        Employee reChecked = dao.findById(emp.getId());
+        System.out.println("7. Kiểm tra lại từ DB xem lương đổi chưa:");
+        System.out.println(" -> " + reChecked);
     }
+
 }

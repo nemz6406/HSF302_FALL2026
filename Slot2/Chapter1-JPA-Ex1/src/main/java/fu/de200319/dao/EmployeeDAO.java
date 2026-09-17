@@ -77,4 +77,24 @@ public class EmployeeDAO {
             em.close();
         }
     }
+
+    // ---------- UPDATE (TODO 0.6) ----------
+    public Employee update(Employee e) {
+        // e truyền vào có thể đang DETACHED (vì được lấy từ 1 EntityManager đã đóng ở hàm findById)
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            // merge() sẽ copy dữ liệu từ e sang một object Managed mới và trả về object đó
+            Employee merged = em.merge(e);
+            em.getTransaction().commit();
+
+            // BẮT BUỘC trả về object merged này để dùng tiếp, không dùng e cũ
+            return merged;
+        } catch (RuntimeException ex) {
+            if (em.getTransaction().isActive()) em.getTransaction().rollback();
+            throw ex;
+        } finally {
+            em.close();
+        }
+    }
 }
