@@ -13,7 +13,7 @@ public class Main {
 
         System.out.println("--- Đang tạo mới nhân viên ---");
         // Tạo 1 object Employee mới (Trạng thái: NEW/TRANSIENT)
-        Employee emp = new Employee("Nguyen Van A", "a5@fpt.edu.vn",
+        Employee emp = new Employee("Nguyen Van A", "a6@fpt.edu.vn",
                 new BigDecimal("15000000"), Gender.MALE, LocalDate.of(2022, 3, 1));
 
         // Gọi hàm save
@@ -68,6 +68,24 @@ public class Main {
         // Kiểm chứng lại bằng cách tìm lại ID đó
         Employee afterDelete = dao.findById(emp.getId());
         System.out.println("9. Tìm lại sau khi xóa (Kỳ vọng là null): " + afterDelete);
+        System.out.println("\n--- Bắt đầu TODO 0.9 (Kiểm tra Unique Email) ---");
+        // Khởi tạo 2 nhân viên có cùng chung 1 email "trung@fpt.edu.vn"
+        Employee dup1 = new Employee("User 1", "trung@fpt.edu.vn",
+                new BigDecimal("10000000"), Gender.FEMALE, LocalDate.now());
+        Employee dup2 = new Employee("User 2", "trung@fpt.edu.vn",
+                new BigDecimal("11000000"), Gender.MALE, LocalDate.now());
+
+        System.out.println("Lưu nhân viên 1...");
+        dao.save(dup1); // Lưu người thứ 1 thành công
+
+        System.out.println("Lưu nhân viên 2 (trùng email)...");
+        try {
+            dao.save(dup2); // Cố tình lưu người thứ 2
+            System.out.println("LỖI: Code chạy sai vì không bắt được exception!");
+        } catch (RuntimeException ex) {
+            System.out.println("THÀNH CÔNG: Đã bắt được lỗi trùng email như kỳ vọng!");
+            System.out.println("Loại lỗi sinh ra: " + ex.getClass().getSimpleName());
+        }
     }
 
 
