@@ -13,7 +13,7 @@ public class Main {
 
         System.out.println("--- Đang tạo mới nhân viên ---");
         // Tạo 1 object Employee mới (Trạng thái: NEW/TRANSIENT)
-        Employee emp = new Employee("Nguyen Van A", "a2@fpt.edu.vn",
+        Employee emp = new Employee("Nguyen Van A", "a3@fpt.edu.vn",
                 new BigDecimal("15000000"), Gender.MALE, LocalDate.of(2022, 3, 1));
 
         // Gọi hàm save
@@ -32,6 +32,18 @@ public class Main {
         System.out.println("3. Đọc tất cả nhân viên (findAll):");
         for (Employee e : dao.findAll()) {
             System.out.println(" - " + e);
+        }
+        System.out.println("\n--- Bắt đầu TODO 0.5 (READ có điều kiện) ---");
+
+        // 1. Tìm theo Email (lấy chính email của nhân viên vừa tạo ở trên để tìm)
+        System.out.println("4. Tìm nhân viên theo email '" + emp.getEmail() + "':");
+        Employee byEmail = dao.findByEmail(emp.getEmail());
+        System.out.println(" -> Kết quả: " + byEmail);
+
+        // 2. Tìm nhân viên có lương lớn hơn 10.000.000 và đang active
+        System.out.println("5. Tìm nhân viên có lương > 10.000.000 và đang active:");
+        for (Employee e : dao.findBySalaryGreaterThanAndActive(new BigDecimal("10000000"))) {
+            System.out.println(" -> " + e);
         }
     }
 }
