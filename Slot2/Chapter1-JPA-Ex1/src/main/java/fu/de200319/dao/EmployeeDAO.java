@@ -96,5 +96,26 @@ public class EmployeeDAO {
         } finally {
             em.close();
         }
+
+    }
+    // ---------- DELETE (TODO 0.7) ----------
+    public void delete(Long id) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            // 1. Tìm entity trước (Lúc này entity ở trạng thái MANAGED)
+            Employee e = em.find(Employee.class, id);
+
+            // 2. Kiểm tra khác null rồi mới xóa
+            if (e != null) {
+                em.remove(e); // -> e chuyển sang trạng thái REMOVED, sẽ bị xóa thật khi commit
+            }
+            em.getTransaction().commit();
+        } catch (RuntimeException ex) {
+            if (em.getTransaction().isActive()) em.getTransaction().rollback();
+            throw ex;
+        } finally {
+            em.close();
+        }
     }
 }

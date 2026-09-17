@@ -13,7 +13,7 @@ public class Main {
 
         System.out.println("--- Đang tạo mới nhân viên ---");
         // Tạo 1 object Employee mới (Trạng thái: NEW/TRANSIENT)
-        Employee emp = new Employee("Nguyen Van A", "a4@fpt.edu.vn",
+        Employee emp = new Employee("Nguyen Van A", "a5@fpt.edu.vn",
                 new BigDecimal("15000000"), Gender.MALE, LocalDate.of(2022, 3, 1));
 
         // Gọi hàm save
@@ -59,6 +59,16 @@ public class Main {
         Employee reChecked = dao.findById(emp.getId());
         System.out.println("7. Kiểm tra lại từ DB xem lương đổi chưa:");
         System.out.println(" -> " + reChecked);
+        System.out.println("\n--- Bắt đầu TODO 0.7 (DELETE) ---");
+        System.out.println("8. Tiến hành xóa nhân viên có ID = " + emp.getId());
+
+        // Gọi hàm xóa
+        dao.delete(emp.getId());
+
+        // Kiểm chứng lại bằng cách tìm lại ID đó
+        Employee afterDelete = dao.findById(emp.getId());
+        System.out.println("9. Tìm lại sau khi xóa (Kỳ vọng là null): " + afterDelete);
     }
+
 
 }
