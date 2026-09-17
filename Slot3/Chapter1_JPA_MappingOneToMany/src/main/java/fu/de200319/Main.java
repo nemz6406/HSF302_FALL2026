@@ -15,31 +15,43 @@ public class Main {
 
         DepartmentDAO departmentDAO = new DepartmentDAO();
 
-        // 1) Tạo Department + 3 Employee, add qua helper method (TODO 2.4)
-        Department it = new Department("HR", "Da NangS");
-        Employee e1 = new Employee("Nguyen Van A", "aa2.nguyen@company.com", Gender.MALE,
+        // 1) Tạo Department + 3 Employee
+        Department it = new Department("IT", "Ho Chi Minh City");
+        Employee e1 = new Employee("Nguyen Van A", "aa4.nguyen@company.com", Gender.MALE,
                 new BigDecimal("15000000"), LocalDate.of(2022, 1, 10));
-        Employee e2 = new Employee("Tran Thi B", "bb2.tran@company.com", Gender.FEMALE,
+        Employee e2 = new Employee("Tran Thi B", "bb4.tran@company.com", Gender.FEMALE,
                 new BigDecimal("18000000"), LocalDate.of(2021, 6, 1));
-        Employee e3 = new Employee("Le Van C", "cc2.le@company.com", Gender.OTHER,
+        Employee e3 = new Employee("Le Van C", "cc4.le@company.com", Gender.OTHER,
                 new BigDecimal("12000000"), LocalDate.of(2023, 3, 15));
 
         it.addEmployee(e1);
         it.addEmployee(e2);
         it.addEmployee(e3);
 
-        // 2) Chỉ persist(department) — cascade = ALL tự lo phần Employee (TODO 2.7)
+        // 2) Chỉ persist(department) — cascade = ALL tự lo phần Employee
         departmentDAO.save(it);
         System.out.println("Đã lưu Department, id = " + it.getId());
 
-        // 3) Tìm lại kèm employees bằng JOIN FETCH (TODO 2.6)
-        Department found = departmentDAO.findByIdWithEmployees(it.getId());
-        System.out.println("Phòng ban: " + found.getName());
-        for (Employee e : found.getEmployees()) {
-            System.out.println("  - " + e.getFullName() + " | Email: " + e.getEmail());
+        System.out.println("\n--- Bắt đầu TODO 2.8 (Tái hiện N+1 Query) ---");
+        // Mở EntityManager cục bộ để test Lazy Load tránh bị lỗi LazyInitializationException
+        jakarta.persistence.EntityManager em = JPAUtil.getEMF().createEntityManager();
+        java.util.List<Department> depts = em.createQuery("SELECT d FROM Department d", Department.class).getResultList();
+        System.out.println("Đã chạy xong SELECT Department. Bắt đầu vòng lặp:");
+        for (Department d : depts) {
+            // Mỗi lần gọi d.getEmployees() ở đây, Hibernate sẽ sinh ra thêm 1 câu lệnh SELECT phụ!
+            System.out.println("Phòng ban " + d.getName() + " có " + d.getEmployees().size() + " nhân viên.");
+        }
+        em.close();
+
+        System.out.println("\n--- Bắt đầu TODO 2.9 (Fix N+1 Query bằng JOIN FETCH) ---");
+        // Dùng hàm findAllWithEmployees() đã viết ở DAO
+        java.util.List<Department> deptsFixed = departmentDAO.findAllWithEmployees();
+        System.out.println("Đã load xong toàn bộ. Bắt đầu vòng lặp (sẽ KHÔNG sinh thêm câu SELECT nào nữa):");
+        for (Department d : deptsFixed) {
+            System.out.println("Phòng ban " + d.getName() + " có " + d.getEmployees().size() + " nhân viên.");
         }
 
-        // Đóng EntityManagerFactory khi tắt app
+
         JPAUtil.close();
     }
 }

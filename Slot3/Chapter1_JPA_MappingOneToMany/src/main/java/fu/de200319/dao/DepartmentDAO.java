@@ -86,4 +86,16 @@ public class DepartmentDAO {
             em.close();
         }
     }
+    // ---------- TODO 2.9: Fix N+1 bằng JOIN FETCH ----------
+    public List<Department> findAllWithEmployees() {
+        EntityManager em = JPAUtil.getEMF().createEntityManager();
+        try {
+            // Câu lệnh này lấy tất cả Department và kéo luôn Employees của chúng lên trong 1 lần
+            return em.createQuery(
+                    "SELECT d FROM Department d JOIN FETCH d.employees",
+                    Department.class).getResultList();
+        } finally {
+            em.close();
+        }
+    }
 }
