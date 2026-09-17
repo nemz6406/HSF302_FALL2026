@@ -2,6 +2,7 @@ package fu.de200319.dao;
 
 import fu.de200319.pojo.Employee;
 import jakarta.persistence.*;
+import java.util.List;
 
 public class EmployeeDAO {
 
@@ -22,6 +23,27 @@ public class EmployeeDAO {
             throw ex;
         } finally {
             em.close(); // Sau khi EntityManager đóng, e chuyển sang trạng thái DETACHED
+        }
+    }
+    // ---------- READ (TODO 0.4) ----------
+    public Employee findById(Long id) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            // Hàm find trả về null nếu không tìm thấy
+            return em.find(Employee.class, id);
+        } finally {
+            em.close();
+        }
+    }
+
+    // Nhớ import java.util.List;
+    public List<Employee> findAll() {
+        EntityManager em = emf.createEntityManager();
+        try {
+            return em.createQuery("SELECT e FROM Employee e", Employee.class)
+                    .getResultList();
+        } finally {
+            em.close();
         }
     }
 }

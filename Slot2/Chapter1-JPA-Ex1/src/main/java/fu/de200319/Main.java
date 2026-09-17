@@ -13,7 +13,7 @@ public class Main {
 
         System.out.println("--- Đang tạo mới nhân viên ---");
         // Tạo 1 object Employee mới (Trạng thái: NEW/TRANSIENT)
-        Employee emp = new Employee("Nguyen Van A", "a@fpt.edu.vn",
+        Employee emp = new Employee("Nguyen Van A", "a2@fpt.edu.vn",
                 new BigDecimal("15000000"), Gender.MALE, LocalDate.of(2022, 3, 1));
 
         // Gọi hàm save
@@ -23,5 +23,15 @@ public class Main {
         System.out.println("Đã lưu thành công! Thông tin nhân viên vừa tạo:");
         System.out.println(emp); // Sẽ gọi hàm toString() trong Employee
         System.out.println("ID được sinh ra là: " + emp.getId());
+        System.out.println("\n--- Bắt đầu TODO 0.4 (READ) ---");
+        // Gọi hàm findById
+        Employee found = dao.findById(emp.getId());
+        System.out.println("2. Đọc lại bằng findById: " + found);
+
+        // Gọi hàm findAll
+        System.out.println("3. Đọc tất cả nhân viên (findAll):");
+        for (Employee e : dao.findAll()) {
+            System.out.println(" - " + e);
+        }
     }
 }
