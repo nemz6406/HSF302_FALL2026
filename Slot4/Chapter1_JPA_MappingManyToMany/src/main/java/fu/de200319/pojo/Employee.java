@@ -46,13 +46,18 @@ public class Employee {
         this.active = active;
     }
 
-    // ---------- TODO 5.5: Helper method đồng bộ 2 chiều ----------
     public void assignToProject(Project p) {
         this.projects.add(p);
         p.getEmployees().add(this);
     }
 
-    // ---------- TODO 5.4: Override equals/hashCode dựa trên Business Key ----------
+    // ---------- TODO 5.9: Gỡ project khỏi nhân viên ----------
+    // Xóa khỏi Set của cả 2 bên để đồng bộ Object state
+    public void unassignFromProject(Project p) {
+        this.projects.remove(p);
+        p.getEmployees().remove(this);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -69,25 +74,18 @@ public class Employee {
     // --- Getters & Setters ---
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
-
     public String getFullName() { return fullName; }
     public void setFullName(String fullName) { this.fullName = fullName; }
-
     public BigDecimal getSalary() { return salary; }
     public void setSalary(BigDecimal salary) { this.salary = salary; }
-
     public LocalDate getHireDate() { return hireDate; }
     public void setHireDate(LocalDate hireDate) { this.hireDate = hireDate; }
-
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
-
     public Gender getGender() { return gender; }
     public void setGender(Gender gender) { this.gender = gender; }
-
     public boolean isActive() { return active; }
     public void setActive(boolean active) { this.active = active; }
-
     public Set<Project> getProjects() { return projects; }
     public void setProjects(Set<Project> projects) { this.projects = projects; }
 }
