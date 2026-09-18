@@ -24,8 +24,8 @@ public class Project {
     @Column(nullable = true)
     private LocalDate endDate;
 
-    // Chuẩn bị cho TODO 5.3. Dùng @Transient để chưa map vội
-    @Transient
+    // ---------- TODO 5.3: Phía bị sở hữu (Inverse side) ----------
+    @ManyToMany(mappedBy = "projects")
     private Set<Employee> employees = new HashSet<>();
 
     public Project() {}
@@ -41,16 +41,22 @@ public class Project {
     // --- Getters & Setters ---
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
+
     public String getProjectCode() { return projectCode; }
     public void setProjectCode(String projectCode) { this.projectCode = projectCode; }
+
     public String getProjectName() { return projectName; }
     public void setProjectName(String projectName) { this.projectName = projectName; }
+
     public BigDecimal getBudget() { return budget; }
     public void setBudget(BigDecimal budget) { this.budget = budget; }
+
     public LocalDate getStartDate() { return startDate; }
     public void setStartDate(LocalDate startDate) { this.startDate = startDate; }
+
     public LocalDate getEndDate() { return endDate; }
     public void setEndDate(LocalDate endDate) { this.endDate = endDate; }
+
     public Set<Employee> getEmployees() { return employees; }
     public void setEmployees(Set<Employee> employees) { this.employees = employees; }
 }
