@@ -26,8 +26,13 @@ public class Employee {
 
     private boolean active = true;
 
-    // Chuẩn bị cho TODO 5.2. Dùng @Transient để code chạy được trong TODO 5.1
-    @Transient
+    // TODO 5.2 — Trong Employee (owning side):
+    @ManyToMany
+    @JoinTable(
+            name = "employee_project",
+            joinColumns = @JoinColumn(name = "employee_id"),
+            inverseJoinColumns = @JoinColumn(name = "project_id")
+    )
     private Set<Project> projects = new HashSet<>();
 
     public Employee() {}
