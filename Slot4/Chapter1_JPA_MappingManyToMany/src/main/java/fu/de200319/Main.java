@@ -1,33 +1,44 @@
 package fu.de200319;
 
+import fu.de200319.dao.EmployeeDAO;
 import fu.de200319.pojo.Employee;
 import fu.de200319.pojo.Gender;
 import fu.de200319.pojo.Project;
+import fu.de200319.util.JPAUtil;
+import jakarta.persistence.EntityManager;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("--- Bắt đầu Test TODO 5.5 ---");
+        System.out.println("--- Bắt đầu Test TODO 5.6 ---");
 
-        Employee emp = new Employee("Nguyen Van A", new BigDecimal("1000"), LocalDate.now(), "nv.a@gmail.com", Gender.MALE, true);
-        Project proj = new Project("PRJ01", "Dự án Alpha", new BigDecimal("5000"), LocalDate.now(), null);
+        EntityManager em = JPAUtil.getEMF().createEntityManager();
 
-        // Gọi helper method
-        emp.assignToProject(proj);
+        // 1. Tạo 2 entity mẫu để có dữ liệu thật trong DB
+        Employee emp = new Employee("Tran Van C", new BigDecimal("1500"), LocalDate.now(), "tranc@gmail.com", Gender.MALE, true);
+        Project proj = new Project("PRJ_TEST", "Dự án Test DAO", new BigDecimal("10000"), LocalDate.now(), null);
 
-        // Kiểm tra đồng bộ 2 chiều
-        boolean checkEmp = emp.getProjects().contains(proj);
-        boolean checkProj = proj.getEmployees().contains(emp);
+        em.getTransaction().begin();
+        em.persist(emp);
+        em.persist(proj);
+        em.getTransaction().commit();
+        em.close();
 
-        System.out.println("Employee có chứa Project không? " + checkEmp);
-        System.out.println("Project có chứa Employee không? " + checkProj);
+        System.out.println("Đã lưu vào DB - Employee ID: " + emp.getId() + " | Project ID: " + proj.getId());
 
-        if (checkEmp && checkProj) {
-            System.out.println("=> Test 5.5 THÀNH CÔNG! Dữ liệu đã được thêm vào cả 2 phía.");
+        // 2. Gọi EmployeeDAO để gán Employee vào Project
+        EmployeeDAO dao = new EmployeeDAO();
+        boolean isSuccess = dao.assignEmployeeToProject(emp.getId(), proj.getId());
+
+        if (isSuccess) {
+            System.out.println("=> Test 5.6 THÀNH CÔNG! Đã phân công thành công.");
+            System.out.println("=> Bạn hãy mở SQL Server và select bảng 'employee_project' để xác nhận nhé!");
         } else {
-            System.out.println("=> Test 5.5 THẤT BẠI! Hãy kiểm tra lại hàm assignToProject.");
+            System.out.println("=> Test 5.6 THẤT BẠI! Hãy kiểm tra lại code.");
         }
+
+        JPAUtil.close();
     }
 }
