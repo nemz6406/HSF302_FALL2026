@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -24,7 +25,6 @@ public class Project {
     @Column(nullable = true)
     private LocalDate endDate;
 
-    // ---------- TODO 5.3: Phía bị sở hữu (Inverse side) ----------
     @ManyToMany(mappedBy = "projects")
     private Set<Employee> employees = new HashSet<>();
 
@@ -36,6 +36,22 @@ public class Project {
         this.budget = budget;
         this.startDate = startDate;
         this.endDate = endDate;
+    }
+
+    // ---------- TODO 5.4: Override equals/hashCode dựa trên Business Key ----------
+    // Không dùng ID để tránh rủi ro mất mát dữ liệu trong Set<> khi entity chưa được persist.
+    // Dùng projectCode vì đây là mã định danh duy nhất của dự án.
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Project project = (Project) o;
+        return Objects.equals(projectCode, project.projectCode);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(projectCode);
     }
 
     // --- Getters & Setters ---
