@@ -46,10 +46,13 @@ public class Employee {
         this.active = active;
     }
 
-    // ---------- TODO 5.4: Override equals/hashCode (Employee) ----------
-    // Lý do KHÔNG dùng id: Khi object vừa được khởi tạo (new Employee), id vẫn là null (do DB chưa sinh ra).
-    // Nếu đưa object có id=null vào Set<>, cấu trúc băm (hash) sẽ bị sai lệch và coi các object null id là giống nhau.
-    // Việc dùng Business Key (email - duy nhất và có ngay từ lúc tạo object) sẽ đảm bảo tính chính xác trong Set.
+    // ---------- TODO 5.5: Helper method đồng bộ 2 chiều ----------
+    public void assignToProject(Project p) {
+        this.projects.add(p);
+        p.getEmployees().add(this);
+    }
+
+    // ---------- TODO 5.4: Override equals/hashCode dựa trên Business Key ----------
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

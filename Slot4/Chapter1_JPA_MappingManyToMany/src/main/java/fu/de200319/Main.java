@@ -2,31 +2,32 @@ package fu.de200319;
 
 import fu.de200319.pojo.Employee;
 import fu.de200319.pojo.Gender;
+import fu.de200319.pojo.Project;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("--- Bắt đầu Test TODO 5.4 ---");
+        System.out.println("--- Bắt đầu Test TODO 5.5 ---");
 
-        // Tạo 2 đối tượng Employee hoàn toàn khác nhau (khác object reference) nhưng CÙNG email[cite: 6]
-        Employee emp1 = new Employee("Nguyen Van A", new BigDecimal("1000"), LocalDate.now(), "test@gmail.com", Gender.MALE, true);
-        Employee emp2 = new Employee("Nguyen Van B", new BigDecimal("2000"), LocalDate.now(), "test@gmail.com", Gender.MALE, true);
+        Employee emp = new Employee("Nguyen Van A", new BigDecimal("1000"), LocalDate.now(), "nv.a@gmail.com", Gender.MALE, true);
+        Project proj = new Project("PRJ01", "Dự án Alpha", new BigDecimal("5000"), LocalDate.now(), null);
 
-        // Thêm cả 2 vào Set
-        Set<Employee> employeeSet = new HashSet<>();
-        employeeSet.add(emp1);
-        employeeSet.add(emp2); // Cố tình add phần tử thứ 2 trùng email
+        // Gọi helper method
+        emp.assignToProject(proj);
 
-        // Kiểm tra kết quả
-        System.out.println("Số lượng phần tử trong Set: " + employeeSet.size());
+        // Kiểm tra đồng bộ 2 chiều
+        boolean checkEmp = emp.getProjects().contains(proj);
+        boolean checkProj = proj.getEmployees().contains(emp);
 
-        if (employeeSet.size() == 1) {
-            System.out.println("=> Test 5.4 THÀNH CÔNG! Set chỉ giữ 1 phần tử vì nó nhận diện trùng email.");
+        System.out.println("Employee có chứa Project không? " + checkEmp);
+        System.out.println("Project có chứa Employee không? " + checkProj);
+
+        if (checkEmp && checkProj) {
+            System.out.println("=> Test 5.5 THÀNH CÔNG! Dữ liệu đã được thêm vào cả 2 phía.");
         } else {
-            System.out.println("=> Test 5.4 THẤT BẠI! Hãy kiểm tra lại hàm equals/hashCode.");
+            System.out.println("=> Test 5.5 THẤT BẠI! Hãy kiểm tra lại hàm assignToProject.");
         }
     }
 }
