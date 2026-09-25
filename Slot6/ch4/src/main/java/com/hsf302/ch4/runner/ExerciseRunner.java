@@ -34,7 +34,8 @@ public class ExerciseRunner implements CommandLineRunner {
     }
 
     private void partC() {
-        // todo8(); todo9(); todo10(); todo11();
+        todo8();
+        // todo9(); todo10(); todo11();
     }
 
     private void partD() {
@@ -87,5 +88,15 @@ public class ExerciseRunner implements CommandLineRunner {
                 + ", totalPages=" + page.getTotalPages()
                 + ", hasNext=" + page.hasNext()
                 + ", hasPrevious=" + page.hasPrevious());
+    }
+    private void todo8() {
+        title("TODO 8: findBy / existsBy / countBy");
+        for (String code : java.util.List.of("AI002", "XX999")) {
+            System.out.println("findByStudentCode(" + code + ") -> " +
+                    studentService.findByStudentCode(code).map(Object::toString).orElse("Not found"));
+        }
+        System.out.println("isEmailExisted(binh.tt@fpt.edu.vn) -> "
+                + studentService.isEmailExisted("binh.tt@fpt.edu.vn"));
+        System.out.println("countActive -> " + studentService.countActive());
     }
 }
