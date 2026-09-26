@@ -48,7 +48,7 @@ public class ExerciseRunner implements CommandLineRunner {
         todo16();
         todo17();
         todo18();
-        // todo19();
+        todo19();
     }
 
     private void bonus() {
@@ -170,5 +170,12 @@ public class ExerciseRunner implements CommandLineRunner {
         int updated = studentService.bonusGpa("IA", 0.5);
         System.out.println("Updated " + updated + " students in IA department");
         printList("IA students after bonus", studentService.findByDepartment("IA"));
+    }
+    private void todo19() {
+        title("TODO 19: @Modifying DELETE");
+        System.out.println("Total before delete: " + studentService.count());
+        int deleted = studentService.deleteInactiveLowGpa(2.6);
+        System.out.println("Deleted " + deleted + " inactive student(s) with GPA < 2.6");
+        System.out.println("Total after delete : " + studentService.count());
     }
 }

@@ -134,5 +134,10 @@ public class StudentServiceImpl implements StudentService {
     public int bonusGpa(String deptCode, double bonus) {
         return studentRepository.increaseGpaForDepartment(deptCode, bonus);
     }
+    @Override
+    @org.springframework.transaction.annotation.Transactional
+    public int deleteInactiveLowGpa(double maxGpa) {
+        return studentRepository.deleteInactiveStudentsWithLowGpa(maxGpa);
+    }
 
 }

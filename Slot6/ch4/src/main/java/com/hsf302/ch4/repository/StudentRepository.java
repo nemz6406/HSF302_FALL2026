@@ -62,4 +62,11 @@ public interface StudentRepository extends JpaRepository<Student, Long>,
             @org.springframework.data.repository.query.Param("deptCode") String deptCode,
             @org.springframework.data.repository.query.Param("bonus") double bonus
     );
+    @org.springframework.data.jpa.repository.Modifying
+    @org.springframework.data.jpa.repository.Query(
+            "DELETE FROM Student s WHERE s.active = false AND s.gpa < :maxGpa"
+    )
+    int deleteInactiveStudentsWithLowGpa(
+            @org.springframework.data.repository.query.Param("maxGpa") double maxGpa
+    );
 }
