@@ -36,4 +36,6 @@ public interface StudentService {
     List<Student> findStudentsNative(String deptCode, double minGpa);   // TODO 17
     int bonusGpa(String deptCode, double bonus);   // TODO 18
     int deleteInactiveLowGpa(double maxGpa);   // TODO 19
+    // ===== Part E — Business logic & Transaction =====
+    Student register(com.hsf302.ch4.dto.StudentCreateDTO dto);   // TODO 20
 }

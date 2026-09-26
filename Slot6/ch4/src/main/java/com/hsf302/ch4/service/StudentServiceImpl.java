@@ -1,19 +1,21 @@
 package com.hsf302.ch4.service;
 
-import java.time.LocalDate;
-import java.util.Optional;
-
+import com.hsf302.ch4.dto.StudentCreateDTO;
 import com.hsf302.ch4.pojo.Gender;
 import com.hsf302.ch4.pojo.Student;
+import com.hsf302.ch4.repository.DepartmentRepository;
 import com.hsf302.ch4.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -21,7 +23,9 @@ import java.util.List;
 public class StudentServiceImpl implements StudentService {
 
     private final StudentRepository studentRepository;
+    private final DepartmentRepository departmentRepository;
 
+    // ===== TODO 6: Built-in Methods =====
     @Override
     public long count() {
         return studentRepository.count();
@@ -32,6 +36,7 @@ public class StudentServiceImpl implements StudentService {
         return studentRepository.findById(id);
     }
 
+    // ===== TODO 7: Sort & Pageable =====
     @Override
     public List<Student> findAllOrderByGpaDesc() {
         return studentRepository.findAll(Sort.by(Sort.Direction.DESC, "gpa"));
@@ -45,7 +50,8 @@ public class StudentServiceImpl implements StudentService {
         Pageable pageable = PageRequest.of(pageIndex, size, Sort.by(sortField).ascending());
         return studentRepository.findAll(pageable);
     }
-    // ===== Part C =====
+
+    // ===== TODO 8: Derived Query (findBy, existsBy, countBy) =====
     @Override
     public Optional<Student> findByStudentCode(String studentCode) {
         return studentRepository.findByStudentCode(studentCode);
@@ -60,17 +66,19 @@ public class StudentServiceImpl implements StudentService {
     public long countActive() {
         return studentRepository.countByActiveTrue();
     }
+
+    // ===== TODO 9: Derived Query (ContainingIgnoreCase, EndingWith, IsNull) =====
     @Override
     public List<Student> searchByName(String keyword) {
         if (keyword == null || keyword.isBlank()) {
-            return List.of();                              // từ khoá rỗng -> không tìm
+            return List.of();
         }
         return studentRepository.findByFullNameContainingIgnoreCase(keyword.trim());
     }
 
     @Override
     public List<Student> findByEmailDomain(String domain) {
-        String suffix = domain.startsWith("@") ? domain : "@" + domain;   // "gmail.com" -> "@gmail.com"
+        String suffix = domain.startsWith("@") ? domain : "@" + domain;
         return studentRepository.findByEmailEndingWith(suffix);
     }
 
@@ -78,6 +86,8 @@ public class StudentServiceImpl implements StudentService {
     public List<Student> findWithoutEmail() {
         return studentRepository.findByEmailIsNull();
     }
+
+    // ===== TODO 10: Derived Query (Between, And, True, After) =====
     @Override
     public List<Student> findByGpaRange(double min, double max) {
         if (min > max) {
@@ -95,6 +105,8 @@ public class StudentServiceImpl implements StudentService {
     public List<Student> findBornAfter(LocalDate date) {
         return studentRepository.findByDobAfter(date);
     }
+
+    // ===== TODO 11: Nested Property & Top =====
     @Override
     public List<Student> findByDepartment(String deptCode) {
         return studentRepository.findByDepartment_CodeOrderByFullNameAsc(deptCode);
@@ -109,11 +121,14 @@ public class StudentServiceImpl implements StudentService {
     public List<Student> findTop3ByGpa() {
         return studentRepository.findTop3ByOrderByGpaDesc();
     }
-    // ===== Part D =====
+
+    // ===== TODO 12: JPQL + Named Parameter =====
     @Override
     public List<Student> findGoodStudents(String deptCode, double minGpa) {
         return studentRepository.findGoodStudentsInDepartment(deptCode, minGpa);
     }
+
+    // ===== TODO 13: JPQL LIKE =====
     @Override
     public List<Student> searchByKeyword(String keyword) {
         if (keyword == null || keyword.isBlank()) {
@@ -121,23 +136,56 @@ public class StudentServiceImpl implements StudentService {
         }
         return studentRepository.searchByKeyword(keyword.trim());
     }
+
+    // ===== TODO 15: JPQL Subquery =====
     @Override
     public List<Student> findAboveAverageGpa() {
         return studentRepository.findAboveAverageGpa();
     }
+
+    // ===== TODO 17: Native Query =====
     @Override
     public List<Student> findStudentsNative(String deptCode, double minGpa) {
         return studentRepository.findStudentsNative(deptCode, minGpa);
     }
+
+    // ===== TODO 18: @Modifying UPDATE =====
     @Override
-    @org.springframework.transaction.annotation.Transactional
+    @Transactional
     public int bonusGpa(String deptCode, double bonus) {
         return studentRepository.increaseGpaForDepartment(deptCode, bonus);
     }
+
+    // ===== TODO 19: @Modifying DELETE =====
     @Override
-    @org.springframework.transaction.annotation.Transactional
+    @Transactional
     public int deleteInactiveLowGpa(double maxGpa) {
         return studentRepository.deleteInactiveStudentsWithLowGpa(maxGpa);
     }
 
+    // ===== TODO 20: Register new student =====
+    @Override
+    @Transactional
+    public Student register(StudentCreateDTO dto) {
+        if (studentRepository.findByStudentCode(dto.studentCode()).isPresent()) {
+            throw new IllegalArgumentException("Student code đã tồn tại: " + dto.studentCode());
+        }
+        if (dto.email() != null && !dto.email().isBlank() && studentRepository.existsByEmail(dto.email())) {
+            throw new IllegalArgumentException("Email đã tồn tại: " + dto.email());
+        }
+        var dept = departmentRepository.findByCode(dto.deptCode())
+                .orElseThrow(() -> new IllegalArgumentException("Department không tồn tại: " + dto.deptCode()));
+
+        Student s = new Student();
+        s.setStudentCode(dto.studentCode());
+        s.setFullName(dto.fullName());
+        s.setEmail(dto.email());
+        s.setGender(dto.gender());
+        s.setDob(dto.dob());
+        s.setGpa(dto.gpa() != null ? dto.gpa() : 0.0);
+        s.setActive(true);
+        dept.addStudent(s);
+
+        return studentRepository.save(s);
+    }
 }

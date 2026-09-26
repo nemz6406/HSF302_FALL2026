@@ -56,7 +56,8 @@ public class ExerciseRunner implements CommandLineRunner {
     }
 
     private void partE() {
-        // todo20(); todo21(); todo22(); todo23();
+        todo20();
+        // todo21(); todo22(); todo23();
     }
 
     // ===== helper functions =====
@@ -177,5 +178,23 @@ public class ExerciseRunner implements CommandLineRunner {
         int deleted = studentService.deleteInactiveLowGpa(2.6);
         System.out.println("Deleted " + deleted + " inactive student(s) with GPA < 2.6");
         System.out.println("Total after delete : " + studentService.count());
+    }
+    private void todo20() {
+        title("TODO 20: Register new student");
+
+        var newStudent = new com.hsf302.ch4.dto.StudentCreateDTO(
+                "SE005", "Vu Thi Kim", "kim.vt@fpt.edu.vn",
+                com.hsf302.ch4.pojo.Gender.FEMALE,
+                java.time.LocalDate.of(2005, 6, 20), 3.7, "SE"
+        );
+        Student created = studentService.register(newStudent);
+        System.out.println("Registered: " + created);
+
+        // Thử đăng ký trùng mã sinh viên để test validation
+        try {
+            studentService.register(newStudent);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Caught expected: " + e.getMessage());
+        }
     }
 }
