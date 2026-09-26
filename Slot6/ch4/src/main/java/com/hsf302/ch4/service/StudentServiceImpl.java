@@ -188,4 +188,26 @@ public class StudentServiceImpl implements StudentService {
 
         return studentRepository.save(s);
     }
+    @Override
+    @Transactional
+    public void transferDepartment(Long studentId, String targetDeptCode) {
+        Student s = studentRepository.findById(studentId)
+                .orElseThrow(() -> new IllegalArgumentException("Student không tồn tại: " + studentId));
+
+        var targetDept = departmentRepository.findByCode(targetDeptCode)
+                .orElseThrow(() -> new IllegalArgumentException("Department không tồn tại: " + targetDeptCode));
+
+        if ("TRIGGER_ROLLBACK".equalsIgnoreCase(targetDeptCode)) {
+            // Trường hợp test rollback: đã đổi đối tượng trong bộ nhớ nhưng ném exception giữa chừng
+            s.getDepartment().getStudents().remove(s);
+            targetDept.addStudent(s);
+            throw new RuntimeException("Lỗi mô phỏng rollback giao dịch!");
+        }
+
+        // Chuyển khoa hợp lệ
+        if (s.getDepartment() != null) {
+            s.getDepartment().getStudents().remove(s);
+        }
+        targetDept.addStudent(s);
+    }
 }

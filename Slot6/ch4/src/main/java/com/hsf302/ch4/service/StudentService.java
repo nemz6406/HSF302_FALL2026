@@ -38,4 +38,5 @@ public interface StudentService {
     int deleteInactiveLowGpa(double maxGpa);   // TODO 19
     // ===== Part E — Business logic & Transaction =====
     Student register(com.hsf302.ch4.dto.StudentCreateDTO dto);   // TODO 20
+    void transferDepartment(Long studentId, String targetDeptCode);   // TODO 21
 }

@@ -57,7 +57,8 @@ public class ExerciseRunner implements CommandLineRunner {
 
     private void partE() {
         todo20();
-        // todo21(); todo22(); todo23();
+        todo21();
+        // todo22(); todo23();
     }
 
     // ===== helper functions =====
@@ -196,5 +197,23 @@ public class ExerciseRunner implements CommandLineRunner {
         } catch (IllegalArgumentException e) {
             System.out.println("Caught expected: " + e.getMessage());
         }
+    }
+    private void todo21() {
+        title("TODO 21: Transfer department & Rollback test");
+
+        // (a) Chuyển sinh viên id=1 sang AI
+        System.out.println("Trước khi chuyển: " + studentService.findById(1L).map(Student::getFullName).orElse(""));
+        studentService.transferDepartment(1L, "AI");
+        System.out.println("Đã chuyển thành công sinh viên id=1 sang khoa AI");
+
+        // (b) Test rollback: Chuyển sang khoa không tồn tại -> bắt ngoại lệ
+        try {
+            studentService.transferDepartment(1L, "NON_EXISTING");
+        } catch (IllegalArgumentException e) {
+            System.out.println("Caught expected rollback error: " + e.getMessage());
+        }
+
+        // Kiểm tra danh sách sinh viên khoa AI để xác nhận sinh viên 1 đã ở khoa AI
+        printList("Sinh vien khoa AI hien tai", studentService.findByDepartment("AI"));
     }
 }
