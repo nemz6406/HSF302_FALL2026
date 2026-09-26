@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -16,7 +17,7 @@ import java.util.List;
 public class DepartmentServiceImpl implements DepartmentService {
 
     private final DepartmentRepository departmentRepository;
-    private final StudentRepository studentRepository; // dùng cho TODO 22
+    private final StudentRepository studentRepository;
 
     @Override
     public long count() {
@@ -27,24 +28,28 @@ public class DepartmentServiceImpl implements DepartmentService {
     public boolean existsById(Long id) {
         return departmentRepository.existsById(id);
     }
+
     @Override
     public List<Department> findDepartmentsWithoutStudents() {
         return departmentRepository.findByStudentsIsEmpty();
     }
+
     @Override
     public List<DepartmentStatDTO> getStatistics() {
         return departmentRepository.getDepartmentStats();
     }
+
     @Override
-    public java.util.Optional<Department> findByCode(String code) {
+    public Optional<Department> findByCode(String code) {
         return departmentRepository.findByCode(code);
     }
 
     @Override
     public Department getWithStudents(String code) {
         return departmentRepository.findByCodeWithStudents(code)
-                .orElseThrow(() -> new IllegalArgumentException("Department not found: " + code));
+                .orElseThrow(() -> new IllegalArgumentException("Department không tồn tại: " + code));
     }
+
     @Override
     @Transactional
     public void deleteDepartment(String code) {

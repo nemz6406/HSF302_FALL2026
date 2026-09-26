@@ -59,7 +59,7 @@ public class ExerciseRunner implements CommandLineRunner {
         todo20();
         todo21();
         todo22();
-        // todo23();
+        todo23();
     }
 
     // ===== helper functions =====
@@ -232,5 +232,11 @@ public class ExerciseRunner implements CommandLineRunner {
         departmentService.deleteDepartment("GD");
         System.out.println("Departments after delete : " + departmentService.count());
         System.out.println("exists GD -> " + departmentService.findByCode("GD").isPresent());
+
+    }
+    private void todo23() {
+        title("TODO 23: ReadOnly transaction verification");
+        System.out.println("Executing statistics in read-only transaction mode:");
+        printList("Department stats", departmentService.getStatistics());
     }
 }
