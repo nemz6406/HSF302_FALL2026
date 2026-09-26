@@ -58,7 +58,8 @@ public class ExerciseRunner implements CommandLineRunner {
     private void partE() {
         todo20();
         todo21();
-        // todo22(); todo23();
+        todo22();
+        // todo23();
     }
 
     // ===== helper functions =====
@@ -215,5 +216,21 @@ public class ExerciseRunner implements CommandLineRunner {
 
         // Kiểm tra danh sách sinh viên khoa AI để xác nhận sinh viên 1 đã ở khoa AI
         printList("Sinh vien khoa AI hien tai", studentService.findByDepartment("AI"));
+    }
+    private void todo22() {
+        title("TODO 22: Delete department with constraint check");
+
+        // (a) Xoá SE -> Thất bại do còn sinh viên
+        try {
+            departmentService.deleteDepartment("SE");
+        } catch (IllegalStateException e) {
+            System.out.println("Caught expected: " + e.getMessage());
+        }
+
+        // (b) Xoá GD -> Thành công do không có sinh viên
+        System.out.println("Departments before delete: " + departmentService.count());
+        departmentService.deleteDepartment("GD");
+        System.out.println("Departments after delete : " + departmentService.count());
+        System.out.println("exists GD -> " + departmentService.findByCode("GD").isPresent());
     }
 }

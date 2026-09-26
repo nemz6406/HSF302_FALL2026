@@ -12,5 +12,6 @@ public interface DepartmentService {
     List<com.hsf302.ch4.dto.DepartmentStatDTO> getStatistics();   // TODO 14 (dùng lại ở TODO 23)
     java.util.Optional<Department> findByCode(String code);   // TODO 16a
     Department getWithStudents(String code);                  // TODO 16b
+    void deleteDepartment(String code);   // TODO 22
 
 }

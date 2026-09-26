@@ -45,4 +45,18 @@ public class DepartmentServiceImpl implements DepartmentService {
         return departmentRepository.findByCodeWithStudents(code)
                 .orElseThrow(() -> new IllegalArgumentException("Department not found: " + code));
     }
+    @Override
+    @Transactional
+    public void deleteDepartment(String code) {
+        var dept = departmentRepository.findByCode(code)
+                .orElseThrow(() -> new IllegalArgumentException("Department không tồn tại: " + code));
+
+        long studentCount = studentRepository.countByDepartment_Code(code);
+        if (studentCount > 0) {
+            throw new IllegalStateException("Không thể xoá department " + code
+                    + " vì vẫn còn " + studentCount + " sinh viên");
+        }
+
+        departmentRepository.delete(dept);
+    }
 }
