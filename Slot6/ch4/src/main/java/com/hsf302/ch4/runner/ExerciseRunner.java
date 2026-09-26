@@ -26,6 +26,7 @@ public class ExerciseRunner implements CommandLineRunner {
         partD();
         bonus();
         partE();
+        bonus();
     }
 
     private void partB() {
@@ -52,7 +53,7 @@ public class ExerciseRunner implements CommandLineRunner {
     }
 
     private void bonus() {
-        // todo24();
+        todo24();
     }
 
     private void partE() {
@@ -238,5 +239,16 @@ public class ExerciseRunner implements CommandLineRunner {
         title("TODO 23: ReadOnly transaction verification");
         System.out.println("Executing statistics in read-only transaction mode:");
         printList("Department stats", departmentService.getStatistics());
+    }
+    private void todo24() {
+        title("TODO 24: Dynamic Search with JPA Specification");
+
+        // Test 1: Tìm theo khoa AI và active = true
+        var filter1 = new com.hsf302.ch4.dto.StudentFilterDTO(null, "AI", null, null, true);
+        printList("Filter AI & Active", studentService.searchWithFilter(filter1));
+
+        // Test 2: Tìm GPA trong khoảng [3.0, 3.8] và keyword chứa chữ 'an'
+        var filter2 = new com.hsf302.ch4.dto.StudentFilterDTO("an", null, 3.0, 3.8, null);
+        printList("Filter keyword 'an' & GPA [3.0, 3.8]", studentService.searchWithFilter(filter2));
     }
 }

@@ -1,6 +1,7 @@
 package com.hsf302.ch4.service;
 
 import com.hsf302.ch4.dto.StudentCreateDTO;
+import com.hsf302.ch4.dto.StudentFilterDTO;
 import com.hsf302.ch4.pojo.Gender;
 import com.hsf302.ch4.pojo.Student;
 import com.hsf302.ch4.repository.DepartmentRepository;
@@ -209,5 +210,11 @@ public class StudentServiceImpl implements StudentService {
             s.getDepartment().getStudents().remove(s);
         }
         targetDept.addStudent(s);
+    }
+    // ===== Part F =====
+    @Override
+    public List<Student> searchWithFilter(StudentFilterDTO filter) {
+        var spec = com.hsf302.ch4.specification.StudentSpecification.filterBy(filter);
+        return studentRepository.findAll(spec);
     }
 }

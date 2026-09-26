@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+
 public interface StudentRepository extends JpaRepository<Student, Long>,
         JpaSpecificationExecutor<Student> {
 
@@ -69,4 +70,5 @@ public interface StudentRepository extends JpaRepository<Student, Long>,
     int deleteInactiveStudentsWithLowGpa(
             @org.springframework.data.repository.query.Param("maxGpa") double maxGpa
     );
+
 }
