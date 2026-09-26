@@ -32,4 +32,5 @@ public interface StudentService {
     // ===== Part D — Custom query =====
     List<Student> findGoodStudents(String deptCode, double minGpa);   // TODO 12
     List<Student> searchByKeyword(String keyword);   // TODO 13
+    List<Student> findAboveAverageGpa();   // TODO 15
 }
