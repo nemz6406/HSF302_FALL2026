@@ -46,7 +46,8 @@ public class ExerciseRunner implements CommandLineRunner {
         todo14();
         todo15();
         todo16();
-        // todo17(); todo18(); todo19();
+        todo17();
+        // todo18(); todo19();
     }
 
     private void bonus() {
@@ -158,5 +159,9 @@ public class ExerciseRunner implements CommandLineRunner {
         com.hsf302.ch4.pojo.Department aiFull = departmentService.getWithStudents("AI");
         System.out.println("(b) " + aiFull);
         aiFull.getStudents().forEach(s -> System.out.println("     " + s));
+    }
+    private void todo17() {
+        title("TODO 17: Native SQL");
+        printList("Native query: AI, GPA >= 3.0", studentService.findStudentsNative("AI", 3.0));
     }
 }

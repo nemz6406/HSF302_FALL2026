@@ -125,5 +125,9 @@ public class StudentServiceImpl implements StudentService {
     public List<Student> findAboveAverageGpa() {
         return studentRepository.findAboveAverageGpa();
     }
+    @Override
+    public List<Student> findStudentsNative(String deptCode, double minGpa) {
+        return studentRepository.findStudentsNative(deptCode, minGpa);
+    }
 
 }
