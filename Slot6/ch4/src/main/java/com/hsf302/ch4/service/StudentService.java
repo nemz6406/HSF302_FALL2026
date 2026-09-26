@@ -29,4 +29,6 @@ public interface StudentService {
     List<Student> findByDepartment(String deptCode);    // TODO 11a
     long countByDepartment(String deptCode);            // TODO 11b (dùng lại ở TODO 22)
     List<Student> findTop3ByGpa();                      // TODO 11c
+    // ===== Part D — Custom query =====
+    List<Student> findGoodStudents(String deptCode, double minGpa);   // TODO 12
 }

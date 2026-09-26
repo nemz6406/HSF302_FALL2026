@@ -25,4 +25,11 @@ public interface StudentRepository extends JpaRepository<Student, Long>,
     List<Student> findByDepartment_CodeOrderByFullNameAsc(String code);   // JOIN departments ... WHERE d.code = ?
     long countByDepartment_Code(String code);
     List<Student> findTop3ByOrderByGpaDesc();                              // SELECT TOP 3 ... ORDER BY gpa DESC
+    // ===== Part D — Custom query =====
+    @org.springframework.data.jpa.repository.Query("SELECT s FROM Student s " +
+            "WHERE s.department.code = :code AND s.gpa >= :minGpa " +
+            "ORDER BY s.gpa DESC")
+    java.util.List<Student> findGoodStudentsInDepartment(
+            @org.springframework.data.repository.query.Param("code") String code,
+            @org.springframework.data.repository.query.Param("minGpa") double minGpa);
 }
