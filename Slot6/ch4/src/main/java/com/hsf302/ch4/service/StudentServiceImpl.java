@@ -129,5 +129,10 @@ public class StudentServiceImpl implements StudentService {
     public List<Student> findStudentsNative(String deptCode, double minGpa) {
         return studentRepository.findStudentsNative(deptCode, minGpa);
     }
+    @Override
+    @org.springframework.transaction.annotation.Transactional
+    public int bonusGpa(String deptCode, double bonus) {
+        return studentRepository.increaseGpaForDepartment(deptCode, bonus);
+    }
 
 }

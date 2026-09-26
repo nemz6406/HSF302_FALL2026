@@ -47,7 +47,8 @@ public class ExerciseRunner implements CommandLineRunner {
         todo15();
         todo16();
         todo17();
-        // todo18(); todo19();
+        todo18();
+        // todo19();
     }
 
     private void bonus() {
@@ -163,5 +164,11 @@ public class ExerciseRunner implements CommandLineRunner {
     private void todo17() {
         title("TODO 17: Native SQL");
         printList("Native query: AI, GPA >= 3.0", studentService.findStudentsNative("AI", 3.0));
+    }
+    private void todo18() {
+        title("TODO 18: @Modifying UPDATE");
+        int updated = studentService.bonusGpa("IA", 0.5);
+        System.out.println("Updated " + updated + " students in IA department");
+        printList("IA students after bonus", studentService.findByDepartment("IA"));
     }
 }

@@ -53,4 +53,13 @@ public interface StudentRepository extends JpaRepository<Student, Long>,
             @org.springframework.data.repository.query.Param("deptCode") String deptCode,
             @org.springframework.data.repository.query.Param("minGpa") double minGpa
     );
+    @org.springframework.data.jpa.repository.Modifying
+    @org.springframework.data.jpa.repository.Query(
+            "UPDATE Student s SET s.gpa = LEAST(4.0, s.gpa + :bonus) " +
+                    "WHERE s.department.code = :deptCode"
+    )
+    int increaseGpaForDepartment(
+            @org.springframework.data.repository.query.Param("deptCode") String deptCode,
+            @org.springframework.data.repository.query.Param("bonus") double bonus
+    );
 }
