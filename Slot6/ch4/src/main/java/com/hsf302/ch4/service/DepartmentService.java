@@ -9,5 +9,6 @@ public interface DepartmentService {
     boolean existsById(Long id);         // TODO 6
     // TODO 11
     List<Department> findDepartmentsWithoutStudents();  // TODO 11d
+    List<com.hsf302.ch4.dto.DepartmentStatDTO> getStatistics();   // TODO 14 (dùng lại ở TODO 23)
 
 }
