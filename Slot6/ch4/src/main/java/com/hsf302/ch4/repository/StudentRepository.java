@@ -4,6 +4,8 @@ import com.hsf302.ch4.pojo.Gender;
 import com.hsf302.ch4.pojo.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -32,4 +34,9 @@ public interface StudentRepository extends JpaRepository<Student, Long>,
     java.util.List<Student> findGoodStudentsInDepartment(
             @org.springframework.data.repository.query.Param("code") String code,
             @org.springframework.data.repository.query.Param("minGpa") double minGpa);
+    @Query("SELECT s FROM Student s " +
+            "WHERE LOWER(s.fullName) LIKE LOWER(CONCAT('%', :kw, '%')) " +
+            "   OR LOWER(s.email)    LIKE LOWER(CONCAT('%', :kw, '%')) " +
+            "ORDER BY s.fullName")
+    List<Student> searchByKeyword(@Param("kw") String keyword);
 }
