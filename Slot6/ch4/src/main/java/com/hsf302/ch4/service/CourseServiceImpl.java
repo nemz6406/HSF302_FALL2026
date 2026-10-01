@@ -79,5 +79,11 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<CourseSummary> findProjectedBySemester(String semester) {
         return courseRepository.findProjectedBySemester(semester);
+
+    }
+    // ===== TODO 16 =====
+    @Override
+    public List<Object[]> countStudentsPerCourse() {
+        return courseRepository.countStudentsPerCourse();
     }
 }

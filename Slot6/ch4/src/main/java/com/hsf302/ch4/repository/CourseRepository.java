@@ -22,4 +22,7 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
     List<Course> findCoursesWithMinCapacityNative(@Param("cap") Integer cap);
     // ===== TODO 11 =====
     List<CourseSummary> findProjectedBySemester(String semester);
+    // ===== TODO 16 =====
+    @Query("SELECT c.code, c.name, COUNT(s) FROM Course c LEFT JOIN c.students s GROUP BY c.id, c.code, c.name")
+    List<Object[]> countStudentsPerCourse();
 }

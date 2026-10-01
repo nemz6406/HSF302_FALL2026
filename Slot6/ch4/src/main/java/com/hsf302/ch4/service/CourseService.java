@@ -18,4 +18,6 @@ public interface CourseService {
     org.springframework.data.domain.Page<Course> getCoursesWithPagination(int pageNo, int pageSize);
     // ===== TODO 11 =====
     List<CourseSummary> findProjectedBySemester(String semester);
+    // ===== TODO 16 =====
+    List<Object[]> countStudentsPerCourse();
 }
