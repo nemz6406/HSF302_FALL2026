@@ -12,4 +12,5 @@ public interface CourseService {
     List<Course> findBySemester(String semester);
     List<Course> findByCreditsGreaterThanEqual(Integer credits);
     List<Course> searchByName(String keyword);
+    List<Course> findCoursesWithMinCapacityNative(Integer cap);
 }

@@ -16,4 +16,7 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
     // ===== TODO 8 =====
     @Query("SELECT c FROM Course c WHERE LOWER(c.name) LIKE LOWER(CONCAT('%', :keyword, '%'))")
     List<Course> searchByName(@Param("keyword") String keyword);
+    // ===== TODO 9 =====
+    @Query(value = "SELECT * FROM courses WHERE capacity >= :cap", nativeQuery = true)
+    List<Course> findCoursesWithMinCapacityNative(@Param("cap") Integer cap);
 }

@@ -33,7 +33,7 @@ public class Exercise2Runner implements CommandLineRunner {
     }
 
     private void partB() { todo6(); todo7(); }
-    private void partC() { todo8();/*  todo9(); todo10(); todo11(); */ }
+    private void partC() { todo8(); todo9(); /*   todo10(); todo11(); */ }
     private void partD() { /* todo12(); todo13(); todo14(); todo15(); todo16(); todo17(); todo18(); todo19(); */ }
     private void bonus() { /* todo25(); */ }
     private void partE() { /* todo20(); todo21(); todo22(); todo23(); todo24(); */ }
@@ -79,5 +79,9 @@ public class Exercise2Runner implements CommandLineRunner {
         title("TODO 8: @Query with JPQL");
         printList("Search courses containing 'development'", courseService.searchByName("development"));
         printList("Search courses containing 'system'", courseService.searchByName("system"));
+    }
+    private void todo9() {
+        title("TODO 9: Native Query");
+        printList("Courses with capacity >= 5", courseService.findCoursesWithMinCapacityNative(5));
     }
 }

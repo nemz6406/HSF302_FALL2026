@@ -52,4 +52,9 @@ public class CourseServiceImpl implements CourseService {
     public List<Course> searchByName(String keyword) {
         return courseRepository.searchByName(keyword);
     }
+    // ===== TODO 9 =====
+    @Override
+    public List<Course> findCoursesWithMinCapacityNative(Integer cap) {
+        return courseRepository.findCoursesWithMinCapacityNative(cap);
+    }
 }
