@@ -33,7 +33,7 @@ public class Exercise2Runner implements CommandLineRunner {
     }
 
     private void partB() { todo6(); todo7(); }
-    private void partC() { todo8(); todo9(); /*   todo10(); todo11(); */ }
+    private void partC() { todo8(); todo9(); todo10();/*    todo11(); */ }
     private void partD() { /* todo12(); todo13(); todo14(); todo15(); todo16(); todo17(); todo18(); todo19(); */ }
     private void bonus() { /* todo25(); */ }
     private void partE() { /* todo20(); todo21(); todo22(); todo23(); todo24(); */ }
@@ -83,5 +83,14 @@ public class Exercise2Runner implements CommandLineRunner {
     private void todo9() {
         title("TODO 9: Native Query");
         printList("Courses with capacity >= 5", courseService.findCoursesWithMinCapacityNative(5));
+    }
+    private void todo10() {
+        title("TODO 10: Pagination & Sorting");
+        // Lấy trang 0 (trang đầu tiên), kích thước 3 phần tử/trang
+        org.springframework.data.domain.Page<Course> page = courseService.getCoursesWithPagination(0, 3);
+
+        System.out.println("Total elements in DB: " + page.getTotalElements());
+        System.out.println("Total pages: " + page.getTotalPages());
+        printList("Page 0 (size 3, sort by credits DESC)", page.getContent());
     }
 }

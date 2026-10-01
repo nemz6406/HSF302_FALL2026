@@ -3,6 +3,9 @@ package com.hsf302.ch4.service;
 import com.hsf302.ch4.pojo.Course;
 import com.hsf302.ch4.repository.CourseRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -56,5 +59,17 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<Course> findCoursesWithMinCapacityNative(Integer cap) {
         return courseRepository.findCoursesWithMinCapacityNative(cap);
+    }
+    // Nhớ thêm các import này ở đầu file nếu chưa có:
+// import org.springframework.data.domain.Page;
+// import org.springframework.data.domain.PageRequest;
+// import org.springframework.data.domain.Pageable;
+
+    // ===== TODO 10 =====
+    @Override
+    public Page<Course> getCoursesWithPagination(int pageNo, int pageSize) {
+        // Tạo request phân trang: lấy trang số pageNo, mỗi trang pageSize phần tử, sắp xếp credits giảm dần
+        Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by("credits").descending());
+        return courseRepository.findAll(pageable);
     }
 }

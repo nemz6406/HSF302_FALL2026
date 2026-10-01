@@ -13,4 +13,6 @@ public interface CourseService {
     List<Course> findByCreditsGreaterThanEqual(Integer credits);
     List<Course> searchByName(String keyword);
     List<Course> findCoursesWithMinCapacityNative(Integer cap);
+    // ===== TODO 10 =====
+    org.springframework.data.domain.Page<Course> getCoursesWithPagination(int pageNo, int pageSize);
 }
