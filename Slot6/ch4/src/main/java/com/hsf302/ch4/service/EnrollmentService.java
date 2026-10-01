@@ -5,4 +5,6 @@ public interface EnrollmentService {
     void enrollStudentToCourse(String studentCode, String courseCode);
     // ===== TODO 13 =====
     void unenrollStudentFromCourse(String studentCode, String courseCode);
+    // ===== TODO 14 =====
+    java.util.List<com.hsf302.ch4.pojo.Course> getCoursesByStudent(String studentCode);
 }

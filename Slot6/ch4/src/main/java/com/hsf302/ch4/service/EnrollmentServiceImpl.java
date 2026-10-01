@@ -43,4 +43,13 @@ public class EnrollmentServiceImpl implements EnrollmentService {
         // Gọi helper method unenroll để xóa quan hệ ở cả 2 chiều và kích hoạt dirty checking xóa khỏi bảng trung gian
         student.unenroll(course);
     }
+    // ===== TODO 14 =====
+    @Override
+    public java.util.List<Course> getCoursesByStudent(String studentCode) {
+        Student student = studentRepository.findByStudentCode(studentCode)
+                .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy sinh viên: " + studentCode));
+
+        // Trả về danh sách Course từ Set chuyển sang List
+        return new java.util.ArrayList<>(student.getCourses());
+    }
 }
