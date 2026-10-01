@@ -34,7 +34,7 @@ public class Exercise2Runner implements CommandLineRunner {
 
     private void partB() { todo6(); todo7(); }
     private void partC() { todo8(); todo9(); todo10(); todo11();/*     */ }
-    private void partD() { todo12(); todo13(); todo14();/*   todo15(); todo16(); todo17(); todo18(); todo19(); */ }
+    private void partD() { todo12(); todo13(); todo14(); todo15();/*    todo16(); todo17(); todo18(); todo19(); */ }
     private void bonus() { /* todo25(); */ }
     private void partE() { /* todo20(); todo21(); todo22(); todo23(); todo24(); */ }
 
@@ -119,5 +119,9 @@ public class Exercise2Runner implements CommandLineRunner {
     private void todo14() {
         title("TODO 14: Get courses by student");
         printList("Courses enrolled by SE001", enrollmentService.getCoursesByStudent("SE001"));
+    }
+    private void todo15() {
+        title("TODO 15: Get students by course");
+        printList("Students enrolled in HSF302", enrollmentService.getStudentsByCourse("HSF302"));
     }
 }

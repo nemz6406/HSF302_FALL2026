@@ -52,4 +52,13 @@ public class EnrollmentServiceImpl implements EnrollmentService {
         // Trả về danh sách Course từ Set chuyển sang List
         return new java.util.ArrayList<>(student.getCourses());
     }
+    // ===== TODO 15 =====
+    @Override
+    public java.util.List<Student> getStudentsByCourse(String courseCode) {
+        Course course = courseRepository.findByCode(courseCode)
+                .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy khóa học: " + courseCode));
+
+        // Trả về danh sách Student từ Set chuyển sang List
+        return new java.util.ArrayList<>(course.getStudents());
+    }
 }
