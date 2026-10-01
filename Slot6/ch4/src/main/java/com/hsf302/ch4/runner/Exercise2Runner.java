@@ -33,7 +33,7 @@ public class Exercise2Runner implements CommandLineRunner {
     }
 
     private void partB() { todo6(); todo7(); }
-    private void partC() { todo8(); todo9(); todo10();/*    todo11(); */ }
+    private void partC() { todo8(); todo9(); todo10(); todo11();/*     */ }
     private void partD() { /* todo12(); todo13(); todo14(); todo15(); todo16(); todo17(); todo18(); todo19(); */ }
     private void bonus() { /* todo25(); */ }
     private void partE() { /* todo20(); todo21(); todo22(); todo23(); todo24(); */ }
@@ -92,5 +92,12 @@ public class Exercise2Runner implements CommandLineRunner {
         System.out.println("Total elements in DB: " + page.getTotalElements());
         System.out.println("Total pages: " + page.getTotalPages());
         printList("Page 0 (size 3, sort by credits DESC)", page.getContent());
+    }
+    private void todo11() {
+        title("TODO 11: Interface Projection");
+        System.out.println("-- Projected courses in FA26 (code & name only):");
+        courseService.findProjectedBySemester("FA26").forEach(c ->
+                System.out.println("   " + c.getCode() + " - " + c.getName())
+        );
     }
 }

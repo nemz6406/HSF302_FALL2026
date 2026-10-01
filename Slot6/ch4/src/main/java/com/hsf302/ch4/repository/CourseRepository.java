@@ -1,5 +1,6 @@
 package com.hsf302.ch4.repository;
 
+import com.hsf302.ch4.dto.CourseSummary;
 import com.hsf302.ch4.pojo.Course;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -19,4 +20,6 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
     // ===== TODO 9 =====
     @Query(value = "SELECT * FROM courses WHERE capacity >= :cap", nativeQuery = true)
     List<Course> findCoursesWithMinCapacityNative(@Param("cap") Integer cap);
+    // ===== TODO 11 =====
+    List<CourseSummary> findProjectedBySemester(String semester);
 }

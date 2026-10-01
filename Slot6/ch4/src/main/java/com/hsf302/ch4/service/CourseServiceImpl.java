@@ -1,5 +1,6 @@
 package com.hsf302.ch4.service;
 
+import com.hsf302.ch4.dto.CourseSummary;
 import com.hsf302.ch4.pojo.Course;
 import com.hsf302.ch4.repository.CourseRepository;
 import lombok.RequiredArgsConstructor;
@@ -71,5 +72,12 @@ public class CourseServiceImpl implements CourseService {
         // Tạo request phân trang: lấy trang số pageNo, mỗi trang pageSize phần tử, sắp xếp credits giảm dần
         Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by("credits").descending());
         return courseRepository.findAll(pageable);
+    }
+    // Nhớ import com.hsf302.ch4.dto.CourseSummary;
+
+    // ===== TODO 11 =====
+    @Override
+    public List<CourseSummary> findProjectedBySemester(String semester) {
+        return courseRepository.findProjectedBySemester(semester);
     }
 }
