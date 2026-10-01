@@ -11,4 +11,5 @@ public interface CourseService {
     Optional<Course> findByCode(String code);
     List<Course> findBySemester(String semester);
     List<Course> findByCreditsGreaterThanEqual(Integer credits);
+    List<Course> searchByName(String keyword);
 }

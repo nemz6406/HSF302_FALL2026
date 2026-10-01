@@ -47,4 +47,9 @@ public class CourseServiceImpl implements CourseService {
     public List<Course> findByCreditsGreaterThanEqual(Integer credits) {
         return courseRepository.findByCreditsGreaterThanEqual(credits);
     }
+    // ===== TODO 8 =====
+    @Override
+    public List<Course> searchByName(String keyword) {
+        return courseRepository.searchByName(keyword);
+    }
 }
