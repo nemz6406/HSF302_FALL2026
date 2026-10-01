@@ -34,7 +34,7 @@ public class Exercise2Runner implements CommandLineRunner {
 
     private void partB() { todo6(); todo7(); }
     private void partC() { todo8(); todo9(); todo10(); todo11();/*     */ }
-    private void partD() { /* todo12(); todo13(); todo14(); todo15(); todo16(); todo17(); todo18(); todo19(); */ }
+    private void partD() { todo12();/*  todo13(); todo14(); todo15(); todo16(); todo17(); todo18(); todo19(); */ }
     private void bonus() { /* todo25(); */ }
     private void partE() { /* todo20(); todo21(); todo22(); todo23(); todo24(); */ }
 
@@ -99,5 +99,13 @@ public class Exercise2Runner implements CommandLineRunner {
         courseService.findProjectedBySemester("FA26").forEach(c ->
                 System.out.println("   " + c.getCode() + " - " + c.getName())
         );
+    }
+    private void todo12() {
+        title("TODO 12: Enroll student to course");
+        // Thử đăng ký môn MKT101 cho sinh viên SE001
+        attempt("Enroll SE001 to MKT101", () -> enrollmentService.enrollStudentToCourse("SE001", "MKT101"));
+
+        // Thử đăng ký với mã không tồn tại để kiểm tra bắt lỗi
+        attempt("Enroll SE001 to INVALID", () -> enrollmentService.enrollStudentToCourse("SE001", "INVALID"));
     }
 }
