@@ -31,4 +31,20 @@ public class CourseServiceImpl implements CourseService {
     public Optional<Course> findById(Long id) {
         return courseRepository.findById(id);
     }
+
+    // ===== TODO 7 =====
+    @Override
+    public Optional<Course> findByCode(String code) {
+        return courseRepository.findByCode(code);
+    }
+
+    @Override
+    public List<Course> findBySemester(String semester) {
+        return courseRepository.findBySemester(semester);
+    }
+
+    @Override
+    public List<Course> findByCreditsGreaterThanEqual(Integer credits) {
+        return courseRepository.findByCreditsGreaterThanEqual(credits);
+    }
 }

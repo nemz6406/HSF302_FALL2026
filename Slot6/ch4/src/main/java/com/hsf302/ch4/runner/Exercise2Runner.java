@@ -32,7 +32,7 @@ public class Exercise2Runner implements CommandLineRunner {
         partE();
     }
 
-    private void partB() { todo6(); /*  todo7(); */ }
+    private void partB() { todo6(); todo7(); }
     private void partC() { /* todo8(); todo9(); todo10(); todo11(); */ }
     private void partD() { /* todo12(); todo13(); todo14(); todo15(); todo16(); todo17(); todo18(); todo19(); */ }
     private void bonus() { /* todo25(); */ }
@@ -66,5 +66,13 @@ public class Exercise2Runner implements CommandLineRunner {
             System.out.println("findById(" + id + "): "
                     + courseService.findById(id).map(Course::toString).orElse("Not found"));
         }
+    }
+    private void todo7() {
+        title("TODO 7: Derived Query Methods");
+        System.out.println("findByCode(PRJ301): "
+                + courseService.findByCode("PRJ301").map(Course::toString).orElse("Not found"));
+
+        printList("Courses in FA26", courseService.findBySemester("FA26"));
+        printList("Courses with credits >= 3", courseService.findByCreditsGreaterThanEqual(3));
     }
 }
