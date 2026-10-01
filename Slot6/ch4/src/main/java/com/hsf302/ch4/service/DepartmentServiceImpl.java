@@ -1,6 +1,8 @@
 package com.hsf302.ch4.service;
 
 import com.hsf302.ch4.dto.DepartmentStatDTO;
+import com.hsf302.ch4.dto.DepartmentStudentCount;
+import com.hsf302.ch4.dto.DepartmentStudentDTO;
 import com.hsf302.ch4.pojo.Department;
 import com.hsf302.ch4.repository.DepartmentRepository;
 import com.hsf302.ch4.repository.StudentRepository;
@@ -63,5 +65,19 @@ public class DepartmentServiceImpl implements DepartmentService {
         }
 
         departmentRepository.delete(dept);
+    }
+    @Override
+    public List<DepartmentStudentCount> countStudentsByDepartment() {
+        return departmentRepository.countStudentsByDepartment();
+    }
+
+    @Override
+    public List<DepartmentStudentDTO> countStudentsByDepartmentDTO() {
+        return departmentRepository.countStudentsByDepartmentDTO();
+    }
+
+    @Override
+    public List<DepartmentStudentCount> countStudentsByDepartmentNative() {
+        return departmentRepository.countStudentsByDepartmentNative();
     }
 }

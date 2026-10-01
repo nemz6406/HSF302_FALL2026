@@ -24,6 +24,7 @@ public class ExerciseRunner implements CommandLineRunner {
         partB();
         partC();
         partD();
+        extraQuery();
         bonus();
         partE();
         bonus();
@@ -62,6 +63,7 @@ public class ExerciseRunner implements CommandLineRunner {
         todo22();
         todo23();
     }
+
 
     // ===== helper functions =====
     public void title(String t) {
@@ -250,5 +252,23 @@ public class ExerciseRunner implements CommandLineRunner {
         // Test 2: Tìm GPA trong khoảng [3.0, 3.8] và keyword chứa chữ 'an'
         var filter2 = new com.hsf302.ch4.dto.StudentFilterDTO("an", null, 3.0, 3.8, null);
         printList("Filter keyword 'an' & GPA [3.0, 3.8]", studentService.searchWithFilter(filter2));
+    }
+    private void extraQuery() {
+        title("EXTRA: Count students by department (3 Ways)");
+
+        // Cách 1: Interface Projection
+        System.out.println("-- Cách 1: Interface Projection --");
+        departmentService.countStudentsByDepartment()
+                .forEach(row -> System.out.println(row.getDepartmentName() + " - " + row.getStudentCount()));
+
+        // Cách 2: DTO Class
+        System.out.println("\n-- Cách 2: DTO Projection --");
+        departmentService.countStudentsByDepartmentDTO()
+                .forEach(row -> System.out.println(row.departmentName() + " - " + row.studentCount()));
+
+        // Cách 3: Native SQL
+        System.out.println("\n-- Cách 3: Native SQL --");
+        departmentService.countStudentsByDepartmentNative()
+                .forEach(row -> System.out.println(row.getDepartmentName() + " - " + row.getStudentCount()));
     }
 }

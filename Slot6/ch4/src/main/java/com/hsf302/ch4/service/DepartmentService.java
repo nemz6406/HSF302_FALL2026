@@ -19,4 +19,7 @@ public interface DepartmentService {
     Department getWithStudents(String code);            // TODO 16b
 
     void deleteDepartment(String code);                 // TODO 22
+    List<com.hsf302.ch4.dto.DepartmentStudentCount> countStudentsByDepartment();
+    List<com.hsf302.ch4.dto.DepartmentStudentDTO> countStudentsByDepartmentDTO();
+    List<com.hsf302.ch4.dto.DepartmentStudentCount> countStudentsByDepartmentNative();
 }
