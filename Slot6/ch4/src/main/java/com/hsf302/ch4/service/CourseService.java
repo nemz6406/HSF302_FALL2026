@@ -22,4 +22,6 @@ public interface CourseService {
     List<Object[]> countStudentsPerCourse();
     // ===== TODO 19 =====
     List<Course> findCoursesByStudentCode(String studentCode);
+    // ===== TODO 20 =====
+    void deleteCourse(Long id);
 }

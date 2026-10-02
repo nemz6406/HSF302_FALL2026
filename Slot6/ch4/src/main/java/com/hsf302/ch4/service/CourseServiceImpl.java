@@ -91,4 +91,13 @@ public class CourseServiceImpl implements CourseService {
     public List<Course> findCoursesByStudentCode(String studentCode) {
         return courseRepository.findCoursesByStudentCode(studentCode);
     }
+    // ===== TODO 20 =====
+    @Override
+    @Transactional
+    public void deleteCourse(Long id) {
+        if (!courseRepository.existsById(id)) {
+            throw new IllegalArgumentException("Không tìm thấy khóa học với ID: " + id);
+        }
+        courseRepository.deleteById(id);
+    }
 }

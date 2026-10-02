@@ -36,7 +36,7 @@ public class Exercise2Runner implements CommandLineRunner {
     private void partC() { todo8(); todo9(); todo10(); todo11();/*     */ }
     private void partD() { todo12(); todo13(); todo14(); todo15(); todo16(); todo17(); todo18(); todo19(); /*       */ }
     private void bonus() { /* todo25(); */ }
-    private void partE() { /* todo20(); todo21(); todo22(); todo23(); todo24(); */ }
+    private void partE() {todo20(); /*  todo21(); todo22(); todo23(); todo24(); */ }
 
     // ===== helpers =====
     private void title(String t) {
@@ -145,5 +145,10 @@ public class Exercise2Runner implements CommandLineRunner {
     private void todo19() {
         title("TODO 19: Find courses by student code");
         printList("Courses taken by SE002", courseService.findCoursesByStudentCode("SE002"));
+    }
+    private void todo20() {
+        title("TODO 20: Delete course with existing enrollments");
+        // Thử xóa Course ID = 1 (PRJ301) - hiện đang có sinh viên đăng ký
+        attempt("Delete course id = 1 (has students)", () -> courseService.deleteCourse(1L));
     }
 }
