@@ -70,5 +70,7 @@ public interface StudentRepository extends JpaRepository<Student, Long>,
     int deleteInactiveStudentsWithLowGpa(
             @org.springframework.data.repository.query.Param("maxGpa") double maxGpa
     );
-
+    // ===== TODO 17 =====
+    @Query("SELECT s.studentCode, s.fullName, COUNT(c) FROM Student s LEFT JOIN s.courses c GROUP BY s.id, s.studentCode, s.fullName")
+    java.util.List<Object[]> countCoursesPerStudent();
 }

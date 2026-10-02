@@ -34,7 +34,7 @@ public class Exercise2Runner implements CommandLineRunner {
 
     private void partB() { todo6(); todo7(); }
     private void partC() { todo8(); todo9(); todo10(); todo11();/*     */ }
-    private void partD() { todo12(); todo13(); todo14(); todo15(); todo16();/*     todo17(); todo18(); todo19(); */ }
+    private void partD() { todo12(); todo13(); todo14(); todo15(); todo16(); todo17();/*      todo18(); todo19(); */ }
     private void bonus() { /* todo25(); */ }
     private void partE() { /* todo20(); todo21(); todo22(); todo23(); todo24(); */ }
 
@@ -129,6 +129,13 @@ public class Exercise2Runner implements CommandLineRunner {
         System.out.println("-- Student count per course:");
         courseService.countStudentsPerCourse().forEach(row ->
                 System.out.println("   Course: " + row[0] + " (" + row[1] + ") -> " + row[2] + " student(s)")
+        );
+    }
+    private void todo17() {
+        title("TODO 17: Count courses per student");
+        System.out.println("-- Course count per student:");
+        studentService.countCoursesPerStudent().forEach(row ->
+                System.out.println("   Student: " + row[0] + " - " + row[1] + " -> " + row[2] + " course(s)")
         );
     }
 }
