@@ -20,4 +20,6 @@ public interface CourseService {
     List<CourseSummary> findProjectedBySemester(String semester);
     // ===== TODO 16 =====
     List<Object[]> countStudentsPerCourse();
+    // ===== TODO 19 =====
+    List<Course> findCoursesByStudentCode(String studentCode);
 }

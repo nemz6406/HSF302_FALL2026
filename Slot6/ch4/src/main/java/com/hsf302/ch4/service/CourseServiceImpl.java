@@ -86,4 +86,9 @@ public class CourseServiceImpl implements CourseService {
     public List<Object[]> countStudentsPerCourse() {
         return courseRepository.countStudentsPerCourse();
     }
+    // ===== TODO 19 =====
+    @Override
+    public List<Course> findCoursesByStudentCode(String studentCode) {
+        return courseRepository.findCoursesByStudentCode(studentCode);
+    }
 }

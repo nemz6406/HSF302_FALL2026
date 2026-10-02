@@ -25,4 +25,7 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
     // ===== TODO 16 =====
     @Query("SELECT c.code, c.name, COUNT(s) FROM Course c LEFT JOIN c.students s GROUP BY c.id, c.code, c.name")
     List<Object[]> countStudentsPerCourse();
+    // ===== TODO 19 =====
+    @Query("SELECT c FROM Course c JOIN c.students s WHERE s.studentCode = :studentCode")
+    List<Course> findCoursesByStudentCode(@org.springframework.data.repository.query.Param("studentCode") String studentCode);
 }
