@@ -222,4 +222,9 @@ public class StudentServiceImpl implements StudentService {
     public java.util.List<Object[]> countCoursesPerStudent() {
         return studentRepository.countCoursesPerStudent();
     }
+    // ===== TODO 18 =====
+    @Override
+    public java.util.List<Student> findStudentsByCourseCode(String courseCode) {
+        return studentRepository.findStudentsByCourseCode(courseCode);
+    }
 }

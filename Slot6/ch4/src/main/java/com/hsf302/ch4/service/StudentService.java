@@ -43,4 +43,6 @@ public interface StudentService {
     List<Student> searchWithFilter(com.hsf302.ch4.dto.StudentFilterDTO filter);   // TODO 24
     // ===== TODO 17 =====
     java.util.List<Object[]> countCoursesPerStudent();
+    // ===== TODO 18 =====
+    java.util.List<com.hsf302.ch4.pojo.Student> findStudentsByCourseCode(String courseCode);
 }
