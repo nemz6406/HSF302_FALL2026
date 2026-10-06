@@ -41,4 +41,8 @@ public interface StudentService {
     void transferDepartment(Long studentId, String targetDeptCode);   // TODO 21
     // ===== Part F — JPA Specification =====
     List<Student> searchWithFilter(com.hsf302.ch4.dto.StudentFilterDTO filter);   // TODO 24
+    // ===== TODO 17 =====
+    java.util.List<Object[]> countCoursesPerStudent();
+    // ===== TODO 18 =====
+    java.util.List<com.hsf302.ch4.pojo.Student> findStudentsByCourseCode(String courseCode);
 }

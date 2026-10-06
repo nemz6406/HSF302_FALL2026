@@ -217,4 +217,14 @@ public class StudentServiceImpl implements StudentService {
         var spec = com.hsf302.ch4.specification.StudentSpecification.filterBy(filter);
         return studentRepository.findAll(spec);
     }
+    // ===== TODO 17 =====
+    @Override
+    public java.util.List<Object[]> countCoursesPerStudent() {
+        return studentRepository.countCoursesPerStudent();
+    }
+    // ===== TODO 18 =====
+    @Override
+    public java.util.List<Student> findStudentsByCourseCode(String courseCode) {
+        return studentRepository.findStudentsByCourseCode(courseCode);
+    }
 }
