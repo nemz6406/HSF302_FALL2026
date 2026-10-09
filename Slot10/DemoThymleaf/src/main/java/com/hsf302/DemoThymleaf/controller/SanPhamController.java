@@ -62,4 +62,14 @@ public class SanPhamController {
         }
         return "redirect:/sanpham/ket-qua";
     }
+    // GET – hiển thị form sửa sản phẩm theo vị trí (index)
+    @GetMapping("/sua")
+    public String hienThiFormSua(@RequestParam("id") int id, Model model) {
+        if (id >= 0 && id < danhSach.size()) {
+            model.addAttribute("sanPham", danhSach.get(id));
+            model.addAttribute("index", id); // Truyền thêm index để biết đang sửa phần tử nào ở bước POST
+            return "sanpham/form-sua";
+        }
+        return "redirect:/sanpham/ket-qua";
+    }
 }
