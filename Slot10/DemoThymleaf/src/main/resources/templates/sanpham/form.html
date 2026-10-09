@@ -10,22 +10,37 @@
     <h2 class="h4 mb-3">Thêm sản phẩm mới</h2>
 
     <form th:action="@{/sanpham/them}" th:object="${sanPham}" method="post"
-          class="card card-body shadow-sm">
+          class="card card-body shadow-sm" novalidate>
 
         <div class="mb-3">
             <label for="ten" class="form-label">Tên sản phẩm</label>
             <input type="text" class="form-control" id="ten" th:field="*{ten}"
-                   placeholder="Nhập tên..." required/>
+                   th:classappend="${#fields.hasErrors('ten')} ? 'is-invalid'"
+                   placeholder="Nhập tên..."/>
+            <!-- Hiển thị lỗi cho trường ten -->
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('ten')}" th:errors="*{ten}">
+                Lỗi tên
+            </div>
         </div>
 
         <div class="mb-3">
             <label for="gia" class="form-label">Giá (VNĐ)</label>
-            <input type="number" class="form-control" id="gia" th:field="*{gia}" min="0" step="1000" required/>
+            <input type="number" class="form-control" id="gia" th:field="*{gia}" min="0" step="1000"
+                   th:classappend="${#fields.hasErrors('gia')} ? 'is-invalid'"/>
+            <!-- Hiển thị lỗi cho trường gia -->
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('gia')}" th:errors="*{gia}">
+                Lỗi giá
+            </div>
         </div>
 
         <div class="mb-3">
             <label for="soLuong" class="form-label">Số lượng</label>
-            <input type="number" class="form-control" id="soLuong" th:field="*{soLuong}" min="0" required/>
+            <input type="number" class="form-control" id="soLuong" th:field="*{soLuong}" min="0"
+                   th:classappend="${#fields.hasErrors('soLuong')} ? 'is-invalid'"/>
+            <!-- Hiển thị lỗi cho trường soLuong -->
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('soLuong')}" th:errors="*{soLuong}">
+                Lỗi số lượng
+            </div>
         </div>
 
         <div class="d-flex gap-2">
