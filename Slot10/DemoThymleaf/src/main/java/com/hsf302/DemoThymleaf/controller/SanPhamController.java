@@ -1,8 +1,10 @@
 package com.hsf302.DemoThymleaf.controller;
 
 import com.hsf302.DemoThymleaf.model.SanPham;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -13,26 +15,28 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @RequestMapping("/sanpham")
 public class SanPhamController {
 
-    // Lưu tạm trong bộ nhớ: dùng chung cho mọi request, mất khi restart app.
-    // CopyOnWriteArrayList đảm bảo an toàn khi nhiều request cùng thêm dữ liệu.
     private final List<SanPham> danhSach = new CopyOnWriteArrayList<>();
 
-    // GET – hiển thị form rỗng
     @GetMapping("/them")
     public String showForm(Model model) {
-        model.addAttribute("sanPham", new SanPham());     // Tên "sanPham" khớp với th:object trong form
+        model.addAttribute("sanPham", new SanPham());
         return "sanpham/form";
     }
 
-    // POST – nhận dữ liệu, lưu vào list, rồi REDIRECT sang trang kết quả
     @PostMapping("/them")
-    public String xuLyForm(@ModelAttribute("sanPham") SanPham sanPham, RedirectAttributes ra) {
+    public String xuLyForm(@Valid @ModelAttribute("sanPham") SanPham sanPham,
+                           BindingResult bindingResult,
+                           RedirectAttributes ra) {
+        // Nếu có lỗi validation, trả về lại form nhập liệu
+        if (bindingResult.hasErrors()) {
+            return "sanpham/form";
+        }
+
         danhSach.add(sanPham);
-        ra.addFlashAttribute("thongBao", "Thêm sản phẩm thành công!");   // Sống qua 1 lần redirect
+        ra.addFlashAttribute("thongBao", "Thêm sản phẩm thành công!");
         return "redirect:/sanpham/ket-qua";
     }
 
-    // GET – trang kết quả hiển thị danh sách
     @GetMapping("/ket-qua")
     public String ketQua(Model model) {
         model.addAttribute("danhSach", danhSach);
