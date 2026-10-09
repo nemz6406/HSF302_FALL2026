@@ -1,4 +1,4 @@
-package com.hsf302.demothymeleaf.controller;
+package com.hsf302.DemoThymleaf.controller;
 
 import com.hsf302.DemoThymleaf.model.SanPham;
 import org.springframework.stereotype.Controller;
