@@ -42,4 +42,13 @@ public class SanPhamController {
         model.addAttribute("danhSach", danhSach);
         return "sanpham/ket-qua";
     }
+    // GET – xem chi tiết sản phẩm theo vị trí (index) trong list
+    @GetMapping("/chi-tiet")
+    public String chiTietSanPham(@RequestParam("id") int id, Model model) {
+        if (id >= 0 && id < danhSach.size()) {
+            model.addAttribute("sanPham", danhSach.get(id));
+            return "sanpham/chi-tiet";
+        }
+        return "redirect:/sanpham/ket-qua";
+    }
 }
