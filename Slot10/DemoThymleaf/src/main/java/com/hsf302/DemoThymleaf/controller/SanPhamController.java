@@ -51,4 +51,15 @@ public class SanPhamController {
         }
         return "redirect:/sanpham/ket-qua";
     }
+    // GET – xóa sản phẩm theo vị trí (index) trong list
+    @GetMapping("/xoa")
+    public String xoaSanPham(@RequestParam("id") int id, RedirectAttributes ra) {
+        if (id >= 0 && id < danhSach.size()) {
+            danhSach.remove(id);
+            ra.addFlashAttribute("thongBao", "Xóa sản phẩm thành công!");
+        } else {
+            ra.addFlashAttribute("thongBao", "Không tìm thấy sản phẩm để xóa!");
+        }
+        return "redirect:/sanpham/ket-qua";
+    }
 }
