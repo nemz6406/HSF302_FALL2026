@@ -1,11 +1,22 @@
 package com.hsf302.DemoThymleaf.model;
 
+import jakarta.validation.constraints.*;
+
 public class SanPham {
+
+    @NotBlank(message = "Tên sản phẩm không được để trống")
+    @Size(min = 3, max = 100, message = "Tên sản phẩm phải từ 3 đến 100 ký tự")
     private String ten;
-    private Double gia;          // Kiểu wrapper: ô trống → null (nếu dùng double/int nguyên thủy sẽ bị lỗi 400)
+
+    @NotNull(message = "Giá không được để trống")
+    @DecimalMin(value = "0.0", inclusive = false, message = "Giá phải lớn hơn 0")
+    private Double gia;
+
+    @NotNull(message = "Số lượng không được để trống")
+    @Min(value = 1, message = "Số lượng tối thiểu phải là 1")
     private Integer soLuong;
 
-    public SanPham() {}          // BẮT BUỘC: Spring cần constructor rỗng để khởi tạo object rồi gán giá trị từng field
+    public SanPham() {}
 
     public String getTen() { return ten; }
     public void setTen(String ten) { this.ten = ten; }
