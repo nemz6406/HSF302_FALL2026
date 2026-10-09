@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Danh sách sản phẩm</title>
+    <link rel="stylesheet" th:href="@{/vendor/bootstrap/css/bootstrap.min.css}"/>
+</head>
+<body>
+<main class="container py-4">
+    <h2 class="h4 mb-3">Danh sách sản phẩm</h2>
+
+    <!-- Flash message thông báo thành công -->
+    <div th:if="${thongBao}" class="alert alert-success alert-dismissible fade show" role="alert">
+        <span th:text="${thongBao}">Thành công</span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <!-- Bảng hiển thị danh sách -->
+    <table class="table table-bordered table-hover bg-white" th:unless="${#lists.isEmpty(danhSach)}">
+        <thead class="table-dark">
+        <tr>
+            <th>#</th>
+            <th>Tên sản phẩm</th>
+            <th class="text-end">Giá (VNĐ)</th>
+            <th class="text-end">Số lượng</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="sp, stat : ${danhSach}">
+            <td th:text="${stat.count}">1</td>
+            <td th:text="${sp.ten}">Tên</td>
+            <td class="text-end" th:text="${#numbers.formatDecimal(sp.gia, 0, 'COMMA', 0, 'POINT')}">0</td>
+            <td class="text-end" th:text="${sp.soLuong}">0</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Trường hợp chưa có sản phẩm nào -->
+    <div th:if="${#lists.isEmpty(danhSach)}" class="alert alert-info">
+        Chưa có sản phẩm nào được thêm.
+    </div>
+
+    <div class="mt-3">
+        <a th:href="@{/sanpham/them}" class="btn btn-primary">Thêm sản phẩm mới</a>
+    </div>
+</main>
+</body>
+</html>
