@@ -16,13 +16,14 @@
     </div>
 
     <!-- Bảng hiển thị danh sách -->
-    <table class="table table-bordered table-hover bg-white" th:unless="${#lists.isEmpty(danhSach)}">
+    <table class="table table-bordered table-hover bg-white align-middle" th:unless="${#lists.isEmpty(danhSach)}">
         <thead class="table-dark">
         <tr>
             <th>#</th>
             <th>Tên sản phẩm</th>
             <th class="text-end">Giá (VNĐ)</th>
             <th class="text-end">Số lượng</th>
+            <th class="text-center">Thao tác</th>
         </tr>
         </thead>
         <tbody>
@@ -31,6 +32,10 @@
             <td th:text="${sp.ten}">Tên</td>
             <td class="text-end" th:text="${#numbers.formatDecimal(sp.gia, 0, 'COMMA', 0, 'POINT')}">0</td>
             <td class="text-end" th:text="${sp.soLuong}">0</td>
+            <td class="text-center">
+                <a th:href="@{/sanpham/chi-tiet(id=${stat.index})}" class="btn btn-sm btn-info text-white me-1">Chi tiết</a>
+                <a th:href="@{/sanpham/xoa(id=${stat.index})}" class="btn btn-sm btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này không?');">Xóa</a>
+            </td>
         </tr>
         </tbody>
     </table>
