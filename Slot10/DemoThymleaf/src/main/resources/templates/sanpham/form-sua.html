@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Cập nhật sản phẩm</title>
+    <link rel="stylesheet" th:href="@{/vendor/bootstrap/css/bootstrap.min.css}"/>
+</head>
+<body>
+<main class="container py-4" style="max-width: 600px">
+    <h2 class="h4 mb-3">Cập nhật sản phẩm</h2>
+
+    <form th:action="@{/sanpham/sua(id=${index})}" th:object="${sanPham}" method="post"
+          class="card card-body shadow-sm" novalidate>
+
+        <div class="mb-3">
+            <label for="ten" class="form-label">Tên sản phẩm</label>
+            <input type="text" class="form-control" id="ten" th:field="*{ten}"
+                   th:classappend="${#fields.hasErrors('ten')} ? 'is-invalid'"
+                   placeholder="Nhập tên..."/>
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('ten')}" th:errors="*{ten}">
+                Lỗi tên
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="gia" class="form-label">Giá (VNĐ)</label>
+            <input type="number" class="form-control" id="gia" th:field="*{gia}" min="0" step="1000"
+                   th:classappend="${#fields.hasErrors('gia')} ? 'is-invalid'"/>
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('gia')}" th:errors="*{gia}">
+                Lỗi giá
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="soLuong" class="form-label">Số lượng</label>
+            <input type="number" class="form-control" id="soLuong" th:field="*{soLuong}" min="0"
+                   th:classappend="${#fields.hasErrors('soLuong')} ? 'is-invalid'"/>
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('soLuong')}" th:errors="*{soLuong}">
+                Lỗi số lượng
+            </div>
+        </div>
+
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-warning text-white">Lưu thay đổi</button>
+            <a th:href="@{/sanpham/ket-qua}" class="btn btn-outline-secondary">Hủy</a>
+        </div>
+    </form>
+</main>
+</body>
+</html>
