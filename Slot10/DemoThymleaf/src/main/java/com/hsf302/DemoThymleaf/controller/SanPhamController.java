@@ -72,4 +72,24 @@ public class SanPhamController {
         }
         return "redirect:/sanpham/ket-qua";
     }
+    // POST – xử lý cập nhật dữ liệu sản phẩm
+    @PostMapping("/sua")
+    public String xuLySuaSanPham(@RequestParam("id") int id,
+                                 @Valid @ModelAttribute("sanPham") SanPham sanPham,
+                                 BindingResult bindingResult,
+                                 Model model,
+                                 RedirectAttributes ra) {
+        // Nếu có lỗi validation, trả về lại form sửa kèm theo index
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("index", id);
+            return "sanpham/form-sua";
+        }
+
+        if (id >= 0 && id < danhSach.size()) {
+            danhSach.set(id, sanPham); // Cập nhật đè phần tử tại vị trí index
+            ra.addFlashAttribute("thongBao", "Cập nhật sản phẩm thành công!");
+        }
+
+        return "redirect:/sanpham/ket-qua";
+    }
 }
